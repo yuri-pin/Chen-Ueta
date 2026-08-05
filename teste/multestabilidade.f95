@@ -78,7 +78,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   ! ida
   do i=0,nsteps
     f_val = 3.5d0 + i*db
-    if (f_val > 4.5d0) exit
+    if (f_val > bf) exit
 
     a(2) = f_val
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
@@ -93,7 +93,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   ! volta
   do i=0,nsteps
     f_val = 3.5d0 - i*db
-    if (f_val < 2.5d0) exit
+    if (f_val < bi) exit
 
     a(2) = f_val
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
@@ -113,7 +113,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   ! ida
   do i=0,nsteps
     f_val = 3.62d0 + i*db
-    if (f_val > 4.5d0) exit
+    if (f_val > bf) exit
 
     a(2) = f_val
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
@@ -128,7 +128,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   ! volta
   do i=0,nsteps
     f_val = 3.62d0 - i*db
-    if (f_val < 2.5d0) exit
+    if (f_val < bi) exit
 
     a(2) = f_val
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
@@ -148,7 +148,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   ! ida
   do i=0,nsteps
     f_val = 3.48d0 + i*db
-    if (f_val > 4.5d0) exit
+    if (f_val > bf) exit
 
     a(2) = f_val
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
@@ -164,7 +164,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   ! volta
   do i=0,nsteps
     f_val = 3.48d0 - i*db
-    if (f_val < 2.5d0) exit
+    if (f_val < bi) exit
 
     a(2) = f_val
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
@@ -185,7 +185,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   ! ida
   do i=0,nsteps
     f_val = 3.48d0 + i*db
-    if (f_val > 4.5d0) exit
+    if (f_val > bf) exit
 
     a(2) = f_val
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
@@ -201,7 +201,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   ! volta
   do i=0,nsteps
     f_val = 3.48d0 - i*db
-    if (f_val < 2.5d0) exit
+    if (f_val < bi) exit
 
     a(2) = f_val
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
