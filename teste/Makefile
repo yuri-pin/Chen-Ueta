@@ -1,6 +1,6 @@
 # 1. Compilador e flags de compilacao e debug
 FC = gfortran
-FFLAGS = -g -fbacktrace -fcheck=all -Wall
+FFLAGS = -g -fbacktrace -fcheck=all -Wall -fopenmp
 
 #"criar diretório só para escrever menos vezes"
 OBJDIR = objeto

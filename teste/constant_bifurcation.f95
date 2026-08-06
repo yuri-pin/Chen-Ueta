@@ -21,7 +21,7 @@ program constant_bifurcation
 
     ! 3. Monta o nome do arquivo dinamicamente usando b1 e b2
     write(nome_arquivo, '(a, f3.1, a, f4.1, a)') &
-        "bifurcacao[", b1, ",", b2, "].csv"
+        "bifurcacao[", b1, ",", b2, "].bin"
 
     ! 4. Chama a rotina principal passando o nome montado
     call rotina_principal(b1, b2, nome_arquivo)
@@ -32,7 +32,7 @@ program constant_bifurcation
 
     ! 3. Monta o nome do arquivo dinamicamente usando b1 e b2
     write(nome_arquivo, '(a, f3.1, a, f4.1, a)') &
-        "bifurcacao[", b1, ",", b2, "].csv"
+        "bifurcacao[", b1, ",", b2, "].bin"
 
     ! 4. Chama a rotina principal passando o nome montado
     call rotina_principal(b1, b2, nome_arquivo)
@@ -50,7 +50,7 @@ subroutine rotina_principal(bi, bf, arq_saida)
   logical :: fecho
   integer :: i, nsteps, M
 
-  open(unit=15,file="csv_const_bif/"//trim(arq_saida),status="replace")
+  open(unit=15,file="csv_const_bif/"//trim(arq_saida),status="replace", form = "unformatted", access = "stream" )
 
   a = (/40d0,1.8d0,33d0/)
   h = 0.0005d0
@@ -63,7 +63,7 @@ subroutine rotina_principal(bi, bf, arq_saida)
   nsteps = int((bf-bi)/db)
 
   do i=0,nsteps
-    f_val = 0.0d0 + i*db
+    f_val = bi + i*db
     a(2) = f_val
 
     call fecho_orbita(a,x0,h,epsilon,fecho,sol,M)

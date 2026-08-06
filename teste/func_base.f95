@@ -104,11 +104,11 @@ subroutine max_orbita_x(a,fecho,sol,M,unit)
   an_sol(M+2,:) = sol(1,:)
 
   if (fecho) then
-    write(unit,*) a(1),",",a(2),",",a(3),",",0.0d0
+    write(unit) a, 0.0d0
   else
     do i=21, M-20
       if (an_sol(i-1,1) < an_sol(i,1) .and. an_sol(i,1) > an_sol(i+1,1)) then
-        write(unit,*) a(1),",",a(2),",",a(3),",",an_sol(i,1)
+        write(unit) a, an_sol(i,1)
       end if
     end do
   end if
