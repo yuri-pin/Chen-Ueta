@@ -20,10 +20,10 @@ program biperiodicidade
 
     ! 3. Monta o nome do arquivo dinamicamente usando b1 e b2
     write(nome_ida, '(a, f3.1, a, f4.1, a)') &
-        "ida[", b1, ",", b2, "].csv"
+        "ida[", b1, ",", b2, "].bin"
 
     write(nome_volta, '(a, f3.1, a, f4.1, a)') &
-        "volta[", b1, ",", b2, "].csv"
+        "volta[", b1, ",", b2, "].bin"
 
     ! 4. Chama a rotina principal passando o nome montado
     call rotina_biperiodicidade(b1, b2, nome_ida, nome_volta)
@@ -34,10 +34,10 @@ program biperiodicidade
 
     ! 3. Monta o nome do arquivo dinamicamente usando b1 e b2
     write(nome_ida, '(a, f3.1, a, f4.1, a)') &
-        "ida[", b1, ",", b2, "].csv"
+        "ida[", b1, ",", b2, "].bin"
 
     write(nome_volta, '(a, f3.1, a, f4.1, a)') &
-        "volta[", b1, ",", b2, "].csv"
+        "volta[", b1, ",", b2, "].bin"
 
     ! 4. Chama a rotina principal passando o nome montado
     call rotina_biperiodicidade(b1, b2, nome_ida, nome_volta)
@@ -63,7 +63,7 @@ subroutine rotina_biperiodicidade(bi, bf, arq_ida,arq_volta)
   nsteps = int((bf - bi)/db)
 
   !==================== IDA ====================
-  open(unit=11,file="csv_ida_volta/"//trim(arq_ida),status="replace")
+  open(unit=11,file="csv_ida_volta/"//trim(arq_ida),status="replace", form = "unformatted", access = "stream" )
 
   x = (/-0.7d0,0.3d0,-0.6d0/)
 
@@ -82,7 +82,7 @@ subroutine rotina_biperiodicidade(bi, bf, arq_ida,arq_volta)
   close(11)
 
   !==================== VOLTA ====================
-  open(unit=12,file="csv_ida_volta/"//trim(arq_volta),status="replace")
+  open(unit=12,file="csv_ida_volta/"//trim(arq_volta),status="replace", form = "unformatted", access = "stream" )
 
   ! usa condição final da IDA corretamente
   ! (garante continuidade real da bifurcação)

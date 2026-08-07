@@ -2,9 +2,9 @@ program main
   implicit none
 
   !call rotina_biperiodicidade()
-  call rotina_principal()
+  !call rotina_principal()
   !call rotina_condicoes_iniciais()
-  !call rotina_grid_periodo()
+  call rotina_grid_periodo()
 
 contains
 !=========================================================
@@ -530,19 +530,24 @@ end subroutine rotina_condicoes_iniciais
 subroutine rotina_grid_periodo()
   use omp_lib 
   implicit none
+
+  real(8) :: t1,t2
+
   real(8) :: a(3), h, epsilon, f_xval, f_yval, dx, dy
   real(8) :: x_initial(3)
   real(8), allocatable :: sol(:,:)
   logical :: fecho
   integer :: M, i, j, n_x, n_y
 
+
+  t1 = omp_get_wtime()
   ! Parâmetros teste 1
   a = (/40.0d0, 3.5d0, 33.0d0/)
   h = 0.001d0
   epsilon = 1d-5
   
-  n_x = 1000
-  n_y = 1000
+  n_x = 400
+  n_y = 400
   dx = 0.5d0/dble(n_x - 1)
   dy = 0.5d0/dble(n_y - 1)
 
@@ -551,7 +556,8 @@ subroutine rotina_grid_periodo()
   ! ATENÇÃO: O 'j' DEVE estar no private. 
   ! O 'sol' sendo private garante uma matriz por core.
   !$omp parallel do private(f_xval, f_yval, x_initial, sol, M, fecho, j) &
-  !$omp shared(a, h, epsilon, dx, dy, n_x, n_y)
+  !$omp shared(a, h, epsilon, dx, dy, n_x, n_y) &
+  !$omp NUM_THREADS(5)
   do i = 1, n_x
      f_xval = -0.25d0 + dble(i-1)*dx
      
@@ -581,7 +587,8 @@ subroutine rotina_grid_periodo()
   close(61)
   print *, "Varredura paralela concluída. Dados salvos no unit 61."
 
-
+  t2 = omp_get_wtime()
+print *, t2-t1
 !_________________________________________________________________________________
 !_________________________________________________________________________________
 ! Parâmetros teste 2

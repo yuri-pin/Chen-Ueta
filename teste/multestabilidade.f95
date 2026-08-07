@@ -29,7 +29,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   nsteps = int((bf - bi)/db)
 
   !==================== IDA ====================
-  open(unit=1,file="ida.csv",status="replace")
+  open(unit=1,file="csv_multiestabilidade/ida.bin",status="replace", form = "unformatted", access = "stream" )
 
   x = (/-0.7d0,0.3d0,-0.6d0/)
 
@@ -48,7 +48,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   close(1)
 
   !==================== VOLTA ====================
-  open(unit=2,file="volta.csv",status="replace")
+  open(unit=2,file="csv_multiestabilidade/volta.bin",status="replace", form = "unformatted", access = "stream" )
 
   ! usa condição final da IDA corretamente
   ! (garante continuidade real da bifurcação)
@@ -71,7 +71,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   close(2)
 
   !==================== PERÍODO 3 ====================
-  open(unit=3,file="periodo3.csv",status="replace")
+  open(unit=3,file="csv_multiestabilidade/periodo3.bin",status="replace", form = "unformatted", access = "stream" )
 
   x = (/-0.1d0,0.6d0,1d0/)
 
@@ -106,7 +106,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
 
   close(3)
     !==================== PERÍODO 5 ====================
-  open(unit=4,file="periodo5.csv",status="replace")
+  open(unit=4,file="csv_multiestabilidade/periodo5.bin",status="replace", form = "unformatted", access = "stream" )
 
   x = (/-12.41583528d0,-11.86578167d0,39.49211319d0/)
 
@@ -141,7 +141,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
 
   close(4)
 !==================== PERÍODO 2 ====================
-  open(unit=5,file="periodo2.csv",status="replace")
+  open(unit=5,file="csv_multiestabilidade/periodo2.bin",status="replace", form = "unformatted", access = "stream" )
 
   x = (/0.7136508d0, 4.1874892d-2, -0.3248538d0/)
 
@@ -178,7 +178,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   close(5)
 
   !==================== PERÍODO 2' ====================
-  open(unit=6,file="periodo2'.csv",status="replace")
+  open(unit=6,file="csv_multiestabilidade/periodo2'.bin",status="replace", form = "unformatted", access = "stream" )
 
   x = (/0.71597913987670680d0 ,     -0.77463467974981670d0 ,       0.75211526849548882d0/)
 
@@ -191,7 +191,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
     call fecho_orbita(a,x,h,epsilon,fecho,sol,M)
     x = sol(M,:)
 
-    call max_orbita_x(a,fecho,sol,M,26)
+    call max_orbita_x(a,fecho,sol,M,6)
 
     deallocate(sol)
   end do

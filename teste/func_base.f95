@@ -185,17 +185,19 @@ subroutine cont_perio(unit,cond_ini, sol, M, tol, periodo_max)
      conta_per(3 + i) = pt_fix(i)
   end do
 
+
+  write(unit) conta_per
   ! 5. Escreve no arquivo unit 61 com estrutura CSV
   ! Escreve x0, y0 e n_unique primeiro
-  write(unit, '(F14.8, A, F14.8, A, F8.0)', advance='no') conta_per(1), ',', conta_per(2), ',', conta_per(3)
+  !write(unit, '(F14.8, A, F14.8, A, F8.0)', advance='no') conta_per(1), ',', conta_per(2), ',', conta_per(3)
   
   ! Escreve os pontos (ou zeros se não houver ponto para aquela coluna)
-  do i = 1, periodo_max
-     write(unit, '(A, F14.8)', advance='no') ',', conta_per(3 + i)
-  end do
+  !do i = 1, periodo_max
+  !   write(unit, '(A, F14.8)', advance='no') ',', conta_per(3 + i)
+  !end do
   
   ! Pula para a próxima linha após terminar o registro
-  write(unit, *) 
+  !write(unit, *) 
 
 end subroutine cont_perio
 
