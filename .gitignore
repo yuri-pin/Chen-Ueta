@@ -1,8 +1,8 @@
 *.csv
-teste/csv_const_bif
-teste/csv_ida_volta
-teste/csv_multiestabilidade
-teste/csv_random
-teste/csv_basin
-teste/objeto
-teste/executavel
+bif_and_basins/csv_const_bif
+bif_and_basins/csv_ida_volta
+bif_and_basins/csv_multiestabilidade
+bif_and_basins/csv_random
+bif_and_basins/csv_basin
+bif_and_basins/objeto
+bif_and_basins/executavel
