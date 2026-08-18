@@ -24,8 +24,8 @@ subroutine Jac_F(a,y,W,res)
   real(8) :: J(3,3)
 
   J(1,1) = -a(1) ; J(1,2) = a(1); J(1,3) = 0.0d0 
-  J(2,1) = (a(3)-a(1)) - y(3) ; J(2,2) = a(3); J(2,3) = y(1) 
-  J(3,1) = y(2) ; J(3,2) = y(1); J(3,3) = a(2)
+  J(2,1) = (a(3)-a(1)) - y(3) ; J(2,2) = a(3); J(2,3) = -y(1) 
+  J(3,1) = y(2) ; J(3,2) = y(1); J(3,3) = -a(2)
 
   res = matmul(J,W)
 
@@ -176,13 +176,13 @@ subroutine Gram_S(W, sum_log)
   W(:,1) = u(:,1)/norm_1
 
   !!second vector normalized
-  u(:,2) = W(:,2) - u(:,1)*dot_product(w(:,2), u(:,1))
+  u(:,2) = W(:,2) - W(:,1)*dot_product(w(:,2), W(:,1))
   norm_2 = sqrt(dot_product(u(:,2),u(:,2)))
   sum_log(2) = sum_log(2) + log(norm_2)
   W(:,2) = u(:,2)/norm_2
 
   !!third vector normalized
-  u(:,3) = W(:,3) - u(:,1)*dot_product(w(:,3), u(:,1)) - u(:,2)*dot_product(w(:,3), u(:,2))
+  u(:,3) = W(:,3) - W(:,1)*dot_product(w(:,3), W(:,1)) - W(:,2)*dot_product(w(:,3), W(:,2))
   norm_3 = sqrt(dot_product(u(:,3),u(:,3)))
   sum_log(3) = sum_log(3) + log(norm_3)
   W(:,3) = u(:,3)/norm_3
