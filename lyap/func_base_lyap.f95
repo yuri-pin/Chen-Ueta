@@ -169,7 +169,7 @@ subroutine Gram_S(W, sum_log)
   real(8) :: u(3,3), norm_1, norm_2, norm_3 !auxiliar variable to construct the orthogonal basis
 
 
-  !!first vector normalized 
+  !!first vector (column) normalized 
   u(:,1) = W(:,1)
   norm_1 = sqrt(dot_product(u(:,1),u(:,1)))
   sum_log(1) = sum_log(1) + log(norm_1)
