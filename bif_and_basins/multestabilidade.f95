@@ -31,7 +31,7 @@ subroutine rotina_multiperiodicidade(bi,bf)
   !==================== IDA ====================
   open(unit=1,file="csv_multiestabilidade/ida.bin",status="replace", form = "unformatted", access = "stream" )
 
-  x = (/-0.7d0,0.3d0,-0.6d0/)
+  x = x = (/-0.7d0,0.3d0,-0.6d0/)
 
   do i=0,nsteps
     f_val = bi + i*db
