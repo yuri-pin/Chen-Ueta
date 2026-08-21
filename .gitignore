@@ -1,12 +1,9 @@
 *.csv
-bif_and_basins/csv_const_bif
-bif_and_basins/csv_ida_volta
-bif_and_basins/csv_multiestabilidade
-bif_and_basins/csv_random
-bif_and_basins/csv_basin
-bif_and_basins/objeto
+*.bin
+*.o
+*.mod
+
+
 bif_and_basins/executavel
 
 lyap/executavel
-lyap/objeto
-lyap/exponents
