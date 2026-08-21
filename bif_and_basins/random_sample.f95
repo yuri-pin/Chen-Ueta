@@ -54,7 +54,7 @@ subroutine rotina_condicoes_iniciais(bi,bf)
     print *, "condicoes iniciais:"
     print *, x_init
 
-    write(unit_id,'(A,I0,A)') "cond_", i, ".csv"
+    write(unit_id,'(A,I0,A)') "cond_", i, ".bin"
 
     open(unit=100+i,file="csv_random/"//trim(adjustl(unit_id)),status="replace", form = "unformatted", access = "stream" )
 

@@ -3,7 +3,10 @@
 *.o
 *.mod
 
+# Bif and Basins
+bif_and_basins/executavel/*
+!bif_and_basins/executavel/README.md
 
-bif_and_basins/executavel
-
-lyap/executavel
+# Lyap
+lyap/executavel/*
+!lyap/executavel/README.md

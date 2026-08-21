@@ -39,7 +39,7 @@ subroutine rotina_grid_periodo(z,b,arq_saida)
   implicit none
 
 
-  real(8) :: t1,t2
+
   real(8), intent(in) :: z,b
   character(len=*), intent(in) :: arq_saida ! Recebe o nome do arquivo dinamicamente
 
@@ -50,7 +50,6 @@ subroutine rotina_grid_periodo(z,b,arq_saida)
   integer :: M, i, j, n_x, n_y
 
 
-  t1 = omp_get_wtime()
   ! Parâmetros teste 1
   a = (/40.0d0, b, 33.0d0/)
   h = 0.001d0
@@ -61,7 +60,7 @@ subroutine rotina_grid_periodo(z,b,arq_saida)
   dx = 0.5d0/dble(n_x - 1)
   dy = 0.5d0/dble(n_y - 1)
 
-  open(unit=61, file="csv_basin/"//trim(arq_saida), status="replace", form = "unformatted", access = "stream" )
+  open(unit=61, file="csv_attraction_basin/"//trim(arq_saida), status="replace", form = "unformatted", access = "stream" )
 
   ! ATENÇÃO: O 'j' DEVE estar no private. 
   ! O 'sol' sendo private garante uma matriz por core.
@@ -96,9 +95,9 @@ subroutine rotina_grid_periodo(z,b,arq_saida)
 
   close(61)
   print *, "Varredura paralela concluída. Dados salvos no unit 61."
-  t2 = omp_get_wtime()
 
-  print *, t2-t1
+
+
 
 
 end subroutine rotina_grid_periodo
