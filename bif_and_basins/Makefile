@@ -16,6 +16,8 @@ OBJS_IV = $(OBJDIR)/func_base.o $(OBJDIR)/ida_volta.o
 OBJS_MLT = $(OBJDIR)/func_base.o $(OBJDIR)/multestabilidade.o
 OBJS_RAN = $(OBJDIR)/func_base.o $(OBJDIR)/random_sample.o
 OBJS_BASIN = $(OBJDIR)/func_base.o $(OBJDIR)/attraction_basin.o
+OBJS_ZOOM = $(OBJDIR)/func_base.o $(OBJDIR)/basin_zoom.o
+
 
 .PHONY: all clean
 
@@ -25,7 +27,8 @@ TARGET = $(BINDIR)/constant_bifurcation \
          $(BINDIR)/ida_volta \
 		 $(BINDIR)/multestabilidade\
 		 $(BINDIR)/random_sample\
-		 $(BINDIR)/attraction_basin
+		 $(BINDIR)/attraction_basin\
+		 $(BINDIR)/basin_zoom
 
 # 4. Regra padrao do Make
 all: $(TARGET)
@@ -54,6 +57,10 @@ $(BINDIR)/random_sample: $(OBJS_RAN)
 $(BINDIR)/attraction_basin: $(OBJS_BASIN)
 	$(FC) $(FFLAGS) -o  $@ $(OBJS_BASIN)
 
+# --- PROGRAMA 5: attraction basin ---
+$(BINDIR)/basin_zoom: $(OBJS_ZOOM)
+	$(FC) $(FFLAGS) -o  $@ $(OBJS_ZOOM)
+
 # 7. Dependencia explicita: constant_bifrucation precisa de func_base compilado
 $(OBJDIR)/constant_bifurcation.o: $(OBJDIR)/func_base.o
 
@@ -64,6 +71,9 @@ $(OBJDIR)/multestabilidade.o: $(OBJDIR)/func_base.o
 $(OBJDIR)/random_sample.o: $(OBJDIR)/func_base.o
 
 $(OBJDIR)/attraction_basin.o: $(OBJDIR)/func_base.o
+
+$(OBJDIR)/basin_zoom.o: $(OBJDIR)/func_base.o
+
 
 # 8. Regra de limpeza
 clean:
