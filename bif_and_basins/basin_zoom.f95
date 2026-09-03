@@ -22,8 +22,7 @@ program basin_zoom
 
     n = 2 !times that we zoom in, at the attraction basin
     do i = 0,n
-        write(nome_arquivo, '(a, f3.3, a, f5.4, a)') &
-            "basin[", b, "]_zoom",10d0**i,".bin"
+        write(nome_arquivo, '(i1, a, f5.3, a)') i, "basin[", b, "]_zoom.bin"
         zoom = 0.1d0**i ! zoom of ten times
         call rotina_grid_periodo(z,b,x1*zoom,x2*zoom,y1*zoom,y2*zoom,nome_arquivo)
         
