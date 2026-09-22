@@ -28,6 +28,7 @@ subroutine rotina_condicoes_iniciais(bi,bf)
   logical :: fecho
   integer :: i, j, M, nsteps
   character (60) :: unit_id
+  integer :: unit_txt
 
   a = (/40d0, 1.8d0, 33d0/)
   h = 0.001d0
@@ -36,8 +37,8 @@ subroutine rotina_condicoes_iniciais(bi,bf)
 
 
   nsteps = int((bf - bi)/db)
-
-  
+  unit_txt = 99
+  open(unit = unit_txt, file = "csv_random/all_init_cond.txt", status = "replace", action = "write")
 
   !========================
   ! loop sobre condições
@@ -55,6 +56,8 @@ subroutine rotina_condicoes_iniciais(bi,bf)
     print *, x_init
 
     write(unit_id,'(A,I0,A)') "cond_", i, ".bin"
+
+    write(unit_txt,'(I10,2X,*(ES16.8E2,1X))') i, x_init(:)
 
     open(unit=100+i,file="csv_random/"//trim(adjustl(unit_id)),status="replace", form = "unformatted", access = "stream" )
 
@@ -98,6 +101,7 @@ subroutine rotina_condicoes_iniciais(bi,bf)
     close(100+i)
 
   end do
+  close(unit_txt)
 
 end subroutine rotina_condicoes_iniciais
 end program
