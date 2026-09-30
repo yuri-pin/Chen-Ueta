@@ -18,90 +18,96 @@ subroutine rotina_condicoes_iniciais(bi,bf)
   implicit none
 
 
-  real(8), intent(in) :: bi,bf
-  integer, parameter :: n_elementos = 40
-  real(8) :: a(3), h, db, epsilon, f_val
+  real(8), intent(in) :: bi,bf ! These are the extreme of my interval
+  integer, parameter :: n_elementos = 120 ! number of times that we choose a random number
+  real(8) :: a(3), h, db, epsilon, f_val, bs(3)
   real(8) :: x0(3)
   real(8), allocatable :: sol(:,:)
   real(8) :: x_init(3)
 
   logical :: fecho
-  integer :: i, j, M, nsteps
+  integer :: i, j, M, nsteps, n_b, k
   character (60) :: unit_id
   integer :: unit_txt
 
-  a = (/40d0, 1.8d0, 33d0/)
-  h = 0.001d0
-  db = 0.001d0
-  epsilon = 1d-5
+  a = (/40d0, 1.8d0, 33d0/) ! initial condition of parameters
+  h = 0.001d0 ! time step of numerical integrations of our problem
+  db = 0.001d0 ! Increment of parameter a(2)
+  epsilon = 1d-5 
 
+  
+
+  bs =(/3.195d0, 3.48d0,3.62d0/) ! values of a(2) which we will inicializate our code
+  n_b = size(bs)
 
   nsteps = int((bf - bi)/db)
   unit_txt = 99
   open(unit = unit_txt, file = "csv_random/all_init_cond.txt", status = "replace", action = "write")
 
-  !========================
-  ! loop sobre condições
-  !========================
-  do i=1,n_elementos
-
+  do k = 1, n_b
     !========================
-    ! gera condições iniciais
+    ! loop sobre condições
     !========================
-    call random_seed()
-    call random_number(x_init)
-    x_init = 0.5d0*x_init - 0.25d0   ! transforma em [-1,1]
+    do i=1+(k-1)*int(n_elementos/n_b),(k)*int(n_elementos/n_b)
 
-    print *, "condicoes iniciais:"
-    print *, x_init
+      !========================
+      ! gera condições iniciais
+      !========================
+      call random_seed()
+      call random_number(x_init)
+      x_init = 0.5d0*x_init - 0.25d0   ! transforma em [-0.25,0.25]
 
-    write(unit_id,'(A,I0,A)') "cond_", i, ".bin"
+      print *, "condicoes iniciais:"
+      print *, x_init ! random initial  condition
 
-    write(unit_txt,'(I10,2X,*(ES16.8E2,1X))') i, x_init(:)
+      write(unit_id,'(A,I0,A)') "cond_", i, ".bin"
 
-    open(unit=100+i,file="csv_random/"//trim(adjustl(unit_id)),status="replace", form = "unformatted", access = "stream" )
+      write(unit_txt, '(ES16.8E2, 2X, I10, 2X, *(ES16.8E2,1X))') bs(k), i, x_init(:)
 
-    x0 = x_init(:)
+      open(unit=100+i,file="csv_random/"//trim(adjustl(unit_id)),status="replace", form = "unformatted", access = "stream" )
 
-    !====================
-    ! variação de f
-    !====================
-    do j=0,nsteps
+      x0 = x_init(:)
 
-      f_val = 3.48d0 + j*db
-      !f_val = 3.62+ j*db 
-      if (f_val > bf) exit
+      !====================
+      ! variação de f
+      !====================
+      do j=0,nsteps
 
-      a(2) = f_val
-      call fecho_orbita(a,x0,h,epsilon,fecho,sol,M)
-      x0 = sol(M,:)
+        f_val = bs(k) + j*db ! forward evolution of parameter a(2)
+        !f_val = 3.62+ j*db 
+        if (f_val > bf) exit
 
-      call max_orbita_x(a,fecho,sol,M,100 + i)
+        a(2) = f_val
+        call fecho_orbita(a,x0,h,epsilon,fecho,sol,M) ! calculate the orbit
+        x0 = sol(M,:)
 
-      deallocate(sol)
+        call max_orbita_x(a,fecho,sol,M,100 + i) ! take all the local maximum of the orbit
+
+        deallocate(sol)
+      end do
+      
+      x0 = x_init(:)
+      ! volta
+      do j=0,nsteps
+        f_val = bs(k) - j*db ! backward evolution of parameter a(2)
+        !f_val = 3.62- j*db 
+        if (f_val < bi) exit
+
+        a(2) = f_val
+        call fecho_orbita(a,x0,h,epsilon,fecho,sol,M)
+        x0 = sol(M,:)
+
+        call max_orbita_x(a,fecho,sol,M,100+i)
+
+        deallocate(sol)
+
+      end do
+
+      close(100+i)
+
     end do
-    
-    x0 = x_init(:)
-    ! volta
-    do j=0,nsteps
-      f_val = 3.48d0 - j*db
-      !f_val = 3.62- j*db 
-      if (f_val < bi) exit
-
-      a(2) = f_val
-      call fecho_orbita(a,x0,h,epsilon,fecho,sol,M)
-      x0 = sol(M,:)
-
-      call max_orbita_x(a,fecho,sol,M,100+i)
-
-      deallocate(sol)
-
-    end do
-
-    close(100+i)
 
   end do
   close(unit_txt)
-
 end subroutine rotina_condicoes_iniciais
 end program
