@@ -12,13 +12,13 @@ program basin_zoom
 
     ! Attraction basin parameter 
     
-    b = 3.195d0
+    b = 3.5d0
 
     !Initial set of initial conditions
-    x1 = -0.25d0
-    x2 =  0.25d0
-    y1 = -0.25d0
-    y2 =  0.25d0
+    x1 = -2.5d0
+    x2 =  2.5d0
+    y1 = -2.5d0
+    y2 =  2.5d0
 
     n = 2 !times that we zoom in, at the attraction basin
     do i = 0,n
@@ -63,7 +63,7 @@ subroutine rotina_grid_periodo(z,b,x1,x2,y1,y2,arq_saida)
   ! O 'sol' sendo private garante uma matriz por core.
   !$omp parallel do private(f_xval, f_yval, x_initial, sol, M, fecho, j) &
   !$omp shared(a, h, epsilon, dx, dy, n_x, n_y) &
-  !$omp NUM_THREADS(5)
+  !$omp NUM_THREADS(15)
   do i = 1, n_x
      f_xval = x1 + dble(i-1)*dx
      

@@ -2,6 +2,12 @@
 *.bin
 *.o
 *.mod
+*.dat
+*.eps
+*.out
+*.swp
+x1
+x2
 
 # Bif and Basins
 bif_and_basins/executavel/*

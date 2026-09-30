@@ -18,7 +18,7 @@ subroutine rotina_condicoes_iniciais(bi,bf)
   implicit none
 
 
-  real(8), intent(in) :: bi,bf ! These are the extreme of my interval
+ real(8), intent(in) :: bi,bf ! These are the extreme of my interval
   integer, parameter :: n_elementos = 120 ! number of times that we choose a random number
   real(8) :: a(3), h, db, epsilon, f_val, bs(3)
   real(8) :: x0(3)
